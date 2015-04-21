@@ -9,7 +9,12 @@ For Developers
 ===============
 Building your own version
 -------------
-To build a modified and signed version of this extension, simply run build.sh.
+To build a modified and signed version of this extension, simply run:
+
+    rm recap.xpi
+    zip recap.xpi components/ content/ defaults/ chrome.manifest install.rdf locale/ skin/
+    
+Then you will have a file called recap.xpi that you can install.
 
 
 Setting up your Environment
