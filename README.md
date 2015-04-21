@@ -4,6 +4,9 @@ The RECAP Firefox Extension.
 Website: https://www.recapthelaw.org
 Contact: info@recapthelaw.org
 
+Reporting Issues
+================
+Please report all issues at the centralized RECAP issue repo, [/freelawproject/recap](https://github.com/freelawproject/recap/issues).
 
 For Developers
 ===============
