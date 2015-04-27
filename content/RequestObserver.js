@@ -83,7 +83,7 @@ RequestObserver.prototype = {
         var prefs = CCGS("@mozilla.org/preferences-service;1",
                          "nsIPrefService").getBranch("extensions.recap.");
 
-        if (prefs.getBoolPref("pretty_filenames") == false) {
+        if (prefs.getBoolPref("pretty_filenames") === false) {
             return;
         }
 
@@ -98,7 +98,7 @@ RequestObserver.prototype = {
         var docid = filenameSplit[0];
 
         if (!/^[\d]{8,}$/.test(docid)) {
-            name = docid.match(/[=\/](\d{8,})/i);
+            var name = docid.match(/[=\/](\d{8,})/i);
             if (name) {
                 docid = name[1];
             }
@@ -108,23 +108,19 @@ RequestObserver.prototype = {
         log("Metacache: " + JSON.stringify(this.metacache));
 
         try {
-            var docnum;
-            var subdocnum;
-            var casenum;
-
-            casenum = this.metacache.documents[docid]["casenum"];
-            officialcasenum = this.metacache.cases[casenum]["officialcasenum"];
-            if (officialcasenum == undefined) {
+            var casenum = this.metacache.documents[docid]["casenum"];
+            var officialcasenum = this.metacache.cases[casenum]["officialcasenum"];
+            if (officialcasenum === undefined) {
                 officialcasenum = casenum;
             }
             else {
                 officialcasenum = officialcasenum.replace(/:/g, "-");
             }
-            docnum = this.metacache.documents[docid]["docnum"];
+            var docnum = this.metacache.documents[docid]["docnum"];
 
             // might fail if this wasn't in the db, so do essential
             // stuff before this
-            subdocnum = this.metacache.documents[docid]["subdocnum"];
+            var subdocnum = this.metacache.documents[docid]["subdocnum"];
 
             // TK - waiting on server to have this data
             //lastdate = this.metacache.documents[docid]["lastdate"];
@@ -134,11 +130,11 @@ RequestObserver.prototype = {
             log("Exception " + e.message);
         }
 
-        if ((typeof casenum != 'undefined') &&
-            (typeof officialcasenum != 'undefined')) {
+        if ((typeof casenum !== 'undefined') &&
+            (typeof officialcasenum !== 'undefined')) {
 
             prettyFilename = PACER_TO_WEST_COURT[court];
-            if (prettyFilename == undefined) {
+            if (prettyFilename === undefined) {
                 prettyFilename = CA_PACER_TO_COURT_NAME[court];
             }
             if (officialcasenum) {
@@ -146,28 +142,28 @@ RequestObserver.prototype = {
             }
 
             //prettyFilename = prettyFilename + "_" + docid;
-            if (typeof docnum != 'undefined') {
+            if (typeof docnum !== 'undefined') {
                 prettyFilename = prettyFilename + "_" + docnum;
             }
-            if ((typeof subdocnum != 'undefined') &&
-                    subdocnum && subdocnum != 0) {
+            if ((typeof subdocnum !== 'undefined') &&
+                    subdocnum && subdocnum !== '0') {
                 prettyFilename = prettyFilename + "_" + subdocnum;
             }
 
             prettyFilename = prettyFilename + ".pdf";
         }
 
-
-
-        if ((typeof casenum != 'undefined') && casenum !='' && (typeof court != 'undefined') && (typeof docnum != 'undefined') && (typeof subdocnum != 'undefined')) {
-
-            var IAFilename;
-            IAFilename = "gov.uscourts." + court + "." + casenum + "." + docnum + "." + subdocnum + ".pdf";
+        if ((typeof casenum !== "undefined") &&
+            casenum !== "" &&
+            (typeof court !== "undefined") &&
+            (typeof docnum !== "undefined") &&
+            (typeof subdocnum !== "undefined")) {
+            var IAFilename = "gov.uscourts." + court + "." + casenum + "." + docnum + "." + subdocnum + ".pdf";
 
         }
 
-        if (filename_style_choice == "pretty_filenames_IAFilename"){
-            if (IAFilename) {
+        if (filename_style_choice === "pretty_filenames_IAFilename"){
+            if (typeof IAFilename !== 'undefined') {
                 filename = IAFilename;
             } else {
                 //filename = PACER_TO_WEST_COURT[court] + "-" + filename;
@@ -184,11 +180,8 @@ RequestObserver.prototype = {
 
         }
 
-
-        if (filename != null && court != null) {
-
+        if (filename !== null && court !== null) {
             var cdVal = "attachment; filename=\"" + filename + "\"";
-
             channel.setResponseHeader("Content-Disposition", cdVal, false);
         }
 
@@ -291,6 +284,8 @@ RequestObserver.prototype = {
         }
         var court = getCourtFromHost(refhost);
 
+        // At ca3, this is:  /cmecf/servlet/TransportRoom?servlet=ShowDoc&dls_id=003011567357&caseId=87236&dktType=dktPublic
+        // At cadc, this is: /cmecf/servlet/TransportRoom?servlet=ShowDoc&dls_id=01207514838&caseId=28567&dktType=dktPublic
         var pathSplit = refpath.split("/");
         var filename = pathSplit.pop() + this.fileSuffixFromMime(mimetype);
 

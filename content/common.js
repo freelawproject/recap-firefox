@@ -166,7 +166,6 @@ function CCGS(contractID, interfaceName) {
 }
 
 
-// Helper function to log to both stderr and Error Console
 function log(text) {
     var msg = "RECAP: " + text + "\n";
 
