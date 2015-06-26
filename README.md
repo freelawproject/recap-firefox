@@ -50,6 +50,10 @@ and JavaScript by going to Tools > Web Developer > Browser Toolbox.
 1. While it's true that every court has their own customized version of PACER,
    there is [a PACER training site that does not charge fees][trainwreck]. You
    can use this if you wish to work on the system without accruing charges.
+   
+1. While you're testing things across versions of PACER, you can use a handy
+   website ([json][csv-json]/[html][csv-html]) created by [@audiodude][ad] to 
+   find suitable versions of PACER.
 
 
 Copyright & License
@@ -78,3 +82,6 @@ License:
 [ramo]: https://addons.mozilla.org/en-us/firefox/addon/restartless-restart/
 [about]: http://about:config
 [24]: https://github.com/freelawproject/recap-firefox/issues/24
+[csv-json]: https://court-version-scraper.herokuapp.com/courts.json
+[csv-html]: https://court-version-scraper.herokuapp.com/
+[ad]: https://github.com/audiodude
