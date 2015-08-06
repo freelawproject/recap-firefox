@@ -1,3 +1,5 @@
+[![Slack Status](https://join-flp-talk.herokuapp.com/badge.svg)](https://join-flp-talk.herokuapp.com/)
+
 Overview
 ========
 The RECAP Firefox Extension.
